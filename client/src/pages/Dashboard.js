@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import { useHistory } from "react-router";
 
 const Dashboard = () => {
   const history = useHistory();
+  const [quote, setQuote] = useState("");
 
   async function populateQuote() {
     const req = await fetch("http://localhost:1337/api/quote", {
@@ -13,7 +14,11 @@ const Dashboard = () => {
     });
 
     const data = req.json();
-    console.log(data);
+    if (data.status === "ok") {
+      setQuote(data.quote);
+    } else {
+      alert(data.error);
+    }
   }
 
   useEffect(() => {
@@ -28,7 +33,7 @@ const Dashboard = () => {
       }
     }
   }, []);
-  return <h1>Hello World</h1>;
+  return <h1>Youre quote: {quote || "No quote found"}Hello World</h1>;
 };
 
 export default Dashboard;

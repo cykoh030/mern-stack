@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function loginUser(event) {
-    event.preventDefault()
+    event.preventDefault();
     const response = await fetch("http://localhost:1337/api/login", {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -18,15 +17,16 @@ function App() {
       }),
     });
 
-    const data = await response.json()
+    const data = await response.json();
 
-    if(data.user) {
-      alert("Login Successful")
-      window.location.href = '/dashboard'
+    if (data.user) {
+      localStorage.setItem("token", data.user);
+      alert("Login Successful");
+      window.location.href = "/dashboard";
     } else {
-      alert("Please check your username and password")
+      alert("Please check your username and password");
     }
-    console.log(data)
+    console.log(data);
   }
 
   return (
