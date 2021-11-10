@@ -20,6 +20,12 @@ function App() {
 
     const data = await response.json()
 
+    if(data.user) {
+      alert("Login Successful")
+      window.location.href = '/dashboard'
+    } else {
+      alert("Please check your username and password")
+    }
     console.log(data)
   }
 
@@ -41,7 +47,7 @@ function App() {
           placeholder="Password"
         />
         <br />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Login" />
       </form>
     </div>
   );
